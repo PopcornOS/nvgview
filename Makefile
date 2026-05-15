@@ -21,11 +21,14 @@ define pop-c
 	$(CC) -ffreestanding -fno-stack-protector -nostdlib \
 		   -fno-asynchronous-unwind-tables -fshort-wchar \
 		   -mno-red-zone -c $(1) -o $(1).o
-	ld -nostdlib -T pop.ld $(1).o -o $(1).tmp.$(EXE)
-	objcopy -O binary $(1).tmp.$(EXE) $(2)
-	rm $(1).o $(1).tmp.$(EXE)
+	ld -nostdlib -T pop.ld $(1).o -o $(1).tmp$(EXE)
+	objcopy -O binary $(1).tmp$(EXE) $(2)
+	rm $(1).o $(1).tmp$(EXE)
 endef
 endif
 
-all:
+all: setup
 	$(call pop-c,main.c,nvgview.bin)
+
+setup:
+	curl https://raw.githubusercontent.com/PopcornOS/popcorn-os/refs/heads/master/popcorn.h -o popcorn.h
