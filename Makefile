@@ -1,5 +1,11 @@
 CC=gcc
 
+ifeq ($(OS),Windows_NT)
+EXE=.exe
+else
+EXE=
+endif
+
 ifeq ($(CC),cl)
 define pop-c
 	@# MSVC path: compile to OBJ, then convert to raw binary
